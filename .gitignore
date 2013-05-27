@@ -9,3 +9,5 @@
 .project
 */gen/*
 MoonDefender/bin
+MoonDefender-android/bin
+MoonDefender-desktop/bin
