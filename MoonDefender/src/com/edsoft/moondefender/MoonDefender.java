@@ -9,19 +9,28 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Logger;
 
 public class MoonDefender implements ApplicationListener {
+	
+	private static final Logger logger = new Logger("MoonDefender");
+	
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private Texture texture;
 	private Sprite sprite;
 	
+	private Texture cannonTexture;
+	private Sprite cannonSprite;
+	
 	@Override
 	public void create() {		
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
+		float s = h/w;
+		float hs = s/2f;
 		
-		camera = new OrthographicCamera(1, h/w);
+		camera = new OrthographicCamera(1, s);
 		batch = new SpriteBatch();
 		
 		texture = new Texture(Gdx.files.internal("data/background.png"));
@@ -33,6 +42,14 @@ public class MoonDefender implements ApplicationListener {
 		sprite.setSize(0.9f, 0.9f * sprite.getHeight() / sprite.getWidth());
 		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
 		sprite.setPosition(-sprite.getWidth()/2, -sprite.getHeight()/2);
+		
+		cannonTexture = new Texture(Gdx.files.internal("data/cannon.png"));
+		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		TextureRegion cannonRegion = new TextureRegion(cannonTexture, 0, 0, 64, 128);
+		cannonSprite = new Sprite(cannonRegion);
+		cannonSprite.setSize(.1f * cannonSprite.getWidth() / cannonSprite.getHeight(), .1f);
+		cannonSprite.setPosition(0, -hs);
+				
 	}
 
 	@Override
@@ -49,6 +66,7 @@ public class MoonDefender implements ApplicationListener {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		sprite.draw(batch);
+		cannonSprite.draw(batch);
 		batch.end();
 	}
 
