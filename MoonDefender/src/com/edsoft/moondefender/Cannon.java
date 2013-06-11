@@ -2,6 +2,7 @@ package com.edsoft.moondefender;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -34,6 +35,7 @@ public class Cannon implements InputProcessor {
 	}
 	
 	public void draw(SpriteBatch batch) {
+		batch.enableBlending();
 		sprite.draw(batch);
 	}
 	
