@@ -10,8 +10,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Logger;
+import com.edsoft.moondefender.weapons.Rocket;
 
-public class Cannon implements InputProcessor {
+public class Cannon extends Weapon implements InputProcessor {
 
 	private static final Logger logger = new Logger("Cannon");
 	
@@ -24,19 +25,29 @@ public class Cannon implements InputProcessor {
 		float s = h/w;
 		float hs = s/2f;
 
-		texture = new Texture(Gdx.files.internal("data/cannon.png"));
-		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		this.texture = new Texture(Gdx.files.internal("data/cannon.png"));
+		this.texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		TextureRegion cannonRegion = new TextureRegion(texture, 0, 0, 64, 128);
-		sprite = new Sprite(cannonRegion);		
-		sprite.setSize(.1f * sprite.getWidth() / sprite.getHeight(), .1f);
-		sprite.setPosition(0 - (sprite.getWidth()/2f), -hs);
-		sprite.setOrigin(sprite.getWidth()/2f, 0f);
-		sprite.setRotation(45f);		
+		this.sprite = new Sprite(cannonRegion);		
+		this.sprite.setSize(.1f * sprite.getWidth() / sprite.getHeight(), .1f);
+		this.sprite.setPosition(0 - (sprite.getWidth()/2f), -hs);
+		this.sprite.setOrigin(sprite.getWidth()/2f, 0f);
+		this.sprite.setRotation(45f);
+		
+		this.fireRocket();
 	}
 	
 	public void draw(SpriteBatch batch) {
-		batch.enableBlending();
-		sprite.draw(batch);
+		super.draw(batch);		
+		this.sprite.draw(batch);
+		
+		if(this.getProjectileCount() == 0) {
+			this.fireRocket();
+		}
+	}
+	
+	public void fireRocket() {
+		this.fire(new Rocket(this.sprite.getX() + this.sprite.getOriginX(), this.sprite.getY(), this.sprite.getRotation()));
 	}
 	
 	private void pointTo(int screenX, int screenY) {

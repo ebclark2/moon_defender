@@ -27,7 +27,6 @@ public class MoonDefender implements ApplicationListener {
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
 		float s = h/w;
-		float hs = s/2f;
 		
 		camera = new OrthographicCamera(1, s);
 		batch = new SpriteBatch();
@@ -38,7 +37,7 @@ public class MoonDefender implements ApplicationListener {
 		TextureRegion region = new TextureRegion(texture, 0, 0, 1024, 1024);
 		
 		sprite = new Sprite(region);
-		sprite.setSize(0.9f, 0.9f * sprite.getHeight() / sprite.getWidth());
+		sprite.setSize(1.f, 1.f * sprite.getHeight() / sprite.getWidth());
 		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
 		sprite.setPosition(-sprite.getWidth()/2, -sprite.getHeight()/2);
 		
@@ -66,6 +65,7 @@ public class MoonDefender implements ApplicationListener {
 
 	@Override
 	public void resize(int width, int height) {
+		ScreenUtil.refresh();
 	}
 
 	@Override
